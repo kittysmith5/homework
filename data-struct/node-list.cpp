@@ -1,7 +1,4 @@
 #include <iostream>
-
-using namespace std;
-
 typedef int ElemType;
 
 typedef struct LNode
@@ -9,8 +6,61 @@ typedef struct LNode
     ElemType data;
     struct LNode *next;
 } LNode, *LinkList;
+
+void InitList(LinkList &L);
+void PrintList(LinkList L);
+int Length(LinkList L);
+LNode *LocateElem(LinkList L,ElemType e);
+bool DeleteNode(LNode *p);
+bool ListDelete(LinkList &L, int i, ElemType &e);
+bool InsertPriorNode(LNode *p, ElemType e);
+bool InsertNextNode(LNode *p, ElemType e);
+bool ListInsert(LinkList &L, int i, ElemType e);
+bool Empty(LinkList L);
+LinkList List_TailInsert(LinkList &L);
+LinkList List_HeadInsert(LinkList &L);
+
+
+using namespace std;
+//尾插法
+LinkList List_TailInsert(LinkList &L){
+    int x;
+    L=(LinkList)malloc(sizeof(LNode));
+    L->next=NULL;
+    LNode *s,*r=L;
+    cin>>x;
+    while (x!=-9999)
+    {
+        s = (LNode *)malloc(sizeof(LNode));
+        s->data = x;
+        //s->next = r->next;
+        r->next =s;
+        r=s;
+        cin>>x;
+    }
+    r->next = NULL;
+    return L;
+}
+//头插法
+LinkList List_HeadInsert(LinkList &L){
+    int x;
+    L=(LinkList)malloc(sizeof(LNode));
+    L->next =NULL;
+    LNode *s;
+    cin>>x;
+    while (x!=-9999)
+    {
+        s = (LNode *)malloc(sizeof(LNode));
+        s->data = x;
+
+        s->next = L->next;
+        L->next =s;
+        cin>>x;
+    }
+    return L;
+}
 // 初始化链表
-void InitList(LinkList L)
+void InitList(LinkList &L)
 {
     if (L == NULL)
     {
@@ -153,7 +203,15 @@ LNode *LocateElem(LinkList L,ElemType e){
     }
     return p;
 }
-
+void PrintList(LinkList L){
+    LNode *p=L->next;
+    while (p)
+    {
+        cout<<p->data<<"\t";
+        p= p->next;
+    }
+    cout<<endl;
+}
 int Length(LinkList L){
     LNode *p = L->next;
     int len=0;
@@ -162,11 +220,13 @@ int Length(LinkList L){
         p=p->next;
         len++;
     }
-    
+    return len;
 }
 int main()
 {
     LinkList L;
-    InitList(L);
+    //InitList(L);
+    List_TailInsert(L);//-9999
+    PrintList(L);
     return 0;
 }
